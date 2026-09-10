@@ -1,0 +1,6 @@
+{
+  "name": "จัดการรายรับรายจ่าย",
+  "description": "ระบบจัดการรายรับรายจ่าย พร้อมสรุปผลรายเดือน กราฟวิเคราะห์ข้อมูล และเข้าสู่ระบบด้วย Gmail บันทึกข้อมูลบน Firebase",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

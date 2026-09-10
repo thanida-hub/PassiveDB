@@ -1,0 +1,100 @@
+{
+  "entities": {
+    "Transaction": {
+      "title": "Transaction",
+      "description": "An income or expense transaction record for a user",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique transaction ID",
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "maxLength": 128
+        },
+        "userId": {
+          "type": "string",
+          "description": "User ID of the transaction owner",
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "maxLength": 128
+        },
+        "type": {
+          "type": "string",
+          "description": "Type of transaction: income or expense",
+          "enum": ["income", "expense"]
+        },
+        "amount": {
+          "type": "number",
+          "description": "Monetary value in THB, must be positive"
+        },
+        "category": {
+          "type": "string",
+          "description": "Category name for the transaction",
+          "maxLength": 64
+        },
+        "date": {
+          "type": "string",
+          "description": "Date of transaction formatted as YYYY-MM-DD",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "maxLength": 10
+        },
+        "note": {
+          "type": "string",
+          "description": "Optional note or description for the transaction",
+          "maxLength": 300
+        },
+        "paymentMethod": {
+          "type": "string",
+          "description": "Payment method used (e.g., cash, transfer, credit_card)",
+          "maxLength": 32
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp string or server timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update timestamp"
+        }
+      },
+      "required": ["userId", "type", "amount", "category", "date"]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Basic profile data for authenticated users",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-zA-Z0-9_\\-]+$",
+          "maxLength": 128
+        },
+        "email": {
+          "type": "string",
+          "maxLength": 256
+        },
+        "displayName": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "photoURL": {
+          "type": "string",
+          "maxLength": 512
+        },
+        "updatedAt": {
+          "type": "string"
+        }
+      },
+      "required": ["email"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Stores user profile information, readable and writable only by the account owner"
+    },
+    "/users/{userId}/transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "Private sub-collection storing transactions belonging to the user"
+    }
+  }
+}
